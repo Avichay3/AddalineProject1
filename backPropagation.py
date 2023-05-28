@@ -32,10 +32,13 @@ dataFrame = createDF(file1)  ## we us the function above to create the data fram
 dataFrame = dataFrame.rename(columns={dataFrame.columns[0]: 'category'})  # rename the first column of the dataFrame to 'category'
 
 # preparing the data for training and convert the selected DataFrame columns to numpy arrays
-X = dataFrame.iloc[:, 1:].to_numpy()  # independent variables that will be used to train a model
+X = dataFrame.iloc[:, 1:].to_numpy()  # independent variables that will be used to train the model
 y = dataFrame['category'].to_numpy()  # represent the corresponding categories or target variable that the model will try to predict
 
-# split the data into training and testing sets using scikit-learn
+""" 
+    split the data into training and testing sets using scikit-learn, we set the function "find_best_test_size"
+    to find the best test size, and in our case it is 0.1 which means that we take 90% of the data for training and 10% for test.
+"""
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
 
 
@@ -45,19 +48,24 @@ scaler = StandardScaler()  # this scaling ensures that the features have similar
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-# Create and train the MLP classifier
+""" 
+    Create and train the MLP classifier.
+    MLP classifier is a class from scikit-learn that represents a multi-layer perceptron (MLP) classifier, 
+    which is a type of artificial neural network.
+    @:param "hidden_layer_sizes" is specifies the architecture of the MLP, in our case it creates four hidden layers, each with 100 neurons.
+    @:param "activation" specifies the activation function to be used in the hidden layers. 'relu' helps to capture complex patterns in the data.
+    @:param "solver" is specifies the optimization algorithm used for training the MLP.
+    'adam' adjusts the learning rate adaptively during training and it is good for us.
+"""
 mlp = MLPClassifier(hidden_layer_sizes=(100, 100, 100, 100), activation='relu', solver='adam', random_state=42)
-mlp.fit(X_train_scaled, y_train)
+mlp.fit(X_train_scaled, y_train)  # trains the MLP model on the provided training data
 
-# Make predictions on the test set
-y_pred = mlp.predict(X_test_scaled)
-
+y_pred = mlp.predict(X_test_scaled)  #  make predictions on the test data using the trained MLP model
 
 
-
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-
+"""
+    function that find the best test size to divide the data for better accuracy
+"""
 def find_best_test_size(X, y, test_sizes):
     best_test_size = None
     best_accuracy = 0.0
