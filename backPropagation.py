@@ -92,6 +92,12 @@ print("Best Accuracy:", best_accuracy)
 
 
 
+cross_validation_scores = cross_val_score(mlp, X_train_scaled, y_train, cv=5)
+
+print("Cross-Validation Scores:")
+for score in cross_validation_scores:
+    print(score)
+
 # Evaluate the accuracy
 accuracy = accuracy_score(y_test, y_pred)
 print("---------------- In summary, the accuracy is ---------------")
