@@ -52,7 +52,7 @@ X_test_scaled = scaler.transform(X_test)
     Create and train the MLP classifier.
     MLP classifier is a class from scikit-learn that represents a multi-layer perceptron (MLP) classifier, 
     which is a type of artificial neural network.
-    @:param "hidden_layer_sizes" is specifies the architecture of the MLP, in our case it creates four hidden layers, each with 100 neurons.
+    @:param "hidden_layer_sizes" is specifies the architecture of the MLP, in our case we creates four hidden layers, each with 100 neurons.
     @:param "activation" specifies the activation function to be used in the hidden layers. 'relu' helps to capture complex patterns in the data.
     @:param "solver" is specifies the optimization algorithm used for training the MLP.
     'adam' adjusts the learning rate adaptively during training and it is good for us.
